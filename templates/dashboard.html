@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        ChurnAI - Dashboard
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+    <style>
+
+        /* ==================================================
+           DATABASE HISTORY
+        ================================================== */
+
+        .history-table-wrapper {
+
+            overflow-x: auto;
+
+            border-radius: 14px;
+
+        }
+
+
+        .history-table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 850px;
+
+        }
+
+
+        .history-table th {
+
+            text-align: left;
+
+            padding: 14px 16px;
+
+            background: #f8fafc;
+
+            color: #64748b;
+
+            font-size: 12px;
+
+            text-transform: uppercase;
+
+            letter-spacing: .05em;
+
+            border-bottom:
+                1px solid #e5e7eb;
+
+        }
+
+
+        .history-table td {
+
+            padding: 16px;
+
+            border-bottom:
+                1px solid #eef0f4;
+
+            color: #334155;
+
+            font-size: 14px;
+
+        }
+
+
+        .history-table tr:hover {
+
+            background: #fafbff;
+
+        }
+
+
+        .record-id {
+
+            color: #6366f1;
+
+            font-weight: 700;
+
+        }
+
+
+        .customer-name {
+
+            font-weight: 700;
+
+            color: #111827;
+
+        }
+
+
+        .customer-small {
+
+            display: block;
+
+            color: #94a3b8;
+
+            font-size: 12px;
+
+            margin-top: 4px;
+
+        }
+
+
+        .action-buttons {
+
+            display: flex;
+
+            gap: 7px;
+
+            align-items: center;
+
+        }
+
+
+        .view-button,
+        .delete-button {
+
+            border: 0;
+
+            border-radius: 8px;
+
+            padding: 8px 11px;
+
+            cursor: pointer;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            transition: .2s;
+
+        }
+
+
+        .view-button {
+
+            background: #eef2ff;
+
+            color: #4f46e5;
+
+        }
+
+
+        .view-button:hover {
+
+            background: #e0e7ff;
+
+        }
+
+
+        .delete-button {
+
+            background: #fff1f2;
+
+            color: #e11d48;
+
+        }
+
+
+        .delete-button:hover {
+
+            background: #ffe4e6;
+
+        }
+
+
+        /* ==================================================
+           CUSTOMER MODAL
+        ================================================== */
+
+        .details-modal {
+
+            position: fixed;
+
+            inset: 0;
+
+            background:
+                rgba(
+                    15,
+                    23,
+                    42,
+                    .55
+                );
+
+            display: none;
+
+            align-items: center;
+
+            justify-content: center;
+
+            z-index: 9999;
+
+            padding: 20px;
+
+        }
+
+
+        .details-modal.show {
+
+            display: flex;
+
+        }
+
+
+        .details-box {
+
+            width: 100%;
+
+            max-width: 720px;
+
+            max-height: 90vh;
+
+            overflow-y: auto;
+
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 28px;
+
+            box-shadow:
+                0 25px 70px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    .2
+                );
+
+        }
+
+
+        .details-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 22px;
+
+        }
+
+
+        .details-header h2 {
+
+            margin: 0;
+
+            color: #111827;
+
+        }
+
+
+        .close-modal {
+
+            width: 36px;
+
+            height: 36px;
+
+            border: 0;
+
+            border-radius: 9px;
+
+            background: #f1f5f9;
+
+            color: #475569;
+
+            cursor: pointer;
+
+            font-size: 18px;
+
+        }
+
+
+        .close-modal:hover {
+
+            background: #e2e8f0;
+
+        }
+
+
+        .details-result {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            background: #f8fafc;
+
+            border-radius: 13px;
+
+            padding: 16px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .details-result strong {
+
+            display: block;
+
+            font-size: 22px;
+
+            margin-top: 4px;
+
+            color: #111827;
+
+        }
+
+
+        .details-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    minmax(
+                        0,
+                        1fr
+                    )
+                );
+
+            gap: 12px;
+
+        }
+
+
+        .detail-item {
+
+            background: #f8fafc;
+
+            border: 1px solid #edf0f4;
+
+            border-radius: 10px;
+
+            padding: 13px;
+
+        }
+
+
+        .detail-item span {
+
+            display: block;
+
+            color: #94a3b8;
+
+            font-size: 11px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .detail-item strong {
+
+            color: #1e293b;
+
+            font-size: 14px;
+
+        }
+
+
+        .delete-all-note {
+
+            margin-top: 12px;
+
+            color: #94a3b8;
+
+            font-size: 12px;
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .details-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body data-page="dashboard">
+
+
+<div class="app-layout">
+
+
+    <!-- ==================================================
+         SIDEBAR
+    ================================================== -->
+
+    <aside class="sidebar">
+
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                C
+            </div>
+
+            <div>
+
+                <h2>
+                    ChurnAI
+                </h2>
+
+                <span>
+                    Prediction System
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+
+            <a
+                href="/"
+                class="nav-link"
+            >
+
+                <span>⌂</span>
+
+                Prediction
+
+            </a>
+
+
+            <a
+                href="/dashboard"
+                class="nav-link active"
+            >
+
+                <span>▦</span>
+
+                Dashboard
+
+            </a>
+
+
+            <a
+                href="/about"
+                class="nav-link"
+            >
+
+                <span>ⓘ</span>
+
+                About Model
+
+            </a>
+
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <div class="model-status">
+
+                <span class="status-dot"></span>
+
+                <div>
+
+                    <strong>
+                        Model Online
+                    </strong>
+
+                    <small>
+                        Dashboard connected
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </aside>
+
+
+    <!-- ==================================================
+         MAIN
+    ================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- HEADER -->
+
+        <header class="topbar">
+
+
+            <div>
+
+                <span class="page-label">
+                    ANALYTICS
+                </span>
+
+                <h1>
+                    Prediction Dashboard
+                </h1>
+
+                <p>
+                    Monitor and manage customer churn
+                    predictions generated by the ML model.
+                </p>
+
+            </div>
+
+
+            <div class="topbar-actions">
+
+                <button
+                    id="refreshDashboard"
+                    class="secondary-button"
+                >
+                    ↻ Refresh
+                </button>
+
+
+                <button
+                    id="clearHistory"
+                    class="danger-button"
+                >
+                    Clear History
+                </button>
+
+            </div>
+
+
+        </header>
+
+
+        <!-- ==================================================
+             STATISTICS
+        ================================================== -->
+
+        <section class="stats-grid">
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    #
+                </div>
+
+                <div>
+
+                    <span>
+                        Total Predictions
+                    </span>
+
+                    <strong id="totalPredictions">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card high-card">
+
+                <div class="stat-icon">
+                    !
+                </div>
+
+                <div>
+
+                    <span>
+                        High Risk
+                    </span>
+
+                    <strong id="highRisk">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card medium-card">
+
+                <div class="stat-icon">
+                    ~
+                </div>
+
+                <div>
+
+                    <span>
+                        Medium Risk
+                    </span>
+
+                    <strong id="mediumRisk">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card low-card">
+
+                <div class="stat-icon">
+                    ✓
+                </div>
+
+                <div>
+
+                    <span>
+                        Low Risk
+                    </span>
+
+                    <strong id="lowRisk">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card probability-card">
+
+                <div class="stat-icon">
+                    %
+                </div>
+
+                <div>
+
+                    <span>
+                        Average Churn Probability
+                    </span>
+
+                    <strong id="averageProbability">
+                        0%
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ==================================================
+             ANALYTICS
+        ================================================== -->
+
+        <section class="dashboard-grid">
+
+
+            <!-- RISK DISTRIBUTION -->
+
+            <div class="card">
+
+
+                <div class="card-header">
+
+                    <div>
+
+                        <span class="section-label">
+                            RISK ANALYSIS
+                        </span>
+
+                        <h2>
+                            Risk Distribution
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="risk-chart">
+
+
+                    <div class="risk-row">
+
+                        <div class="risk-row-header">
+
+                            <span>
+                                High Risk
+                            </span>
+
+                            <strong id="highPercentage">
+                                0%
+                            </strong>
+
+                        </div>
+
+
+                        <div class="chart-bar">
+
+                            <div
+                                id="highBar"
+                                class="chart-fill high-fill"
+                                style="width:0%"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="risk-row">
+
+                        <div class="risk-row-header">
+
+                            <span>
+                                Medium Risk
+                            </span>
+
+                            <strong id="mediumPercentage">
+                                0%
+                            </strong>
+
+                        </div>
+
+
+                        <div class="chart-bar">
+
+                            <div
+                                id="mediumBar"
+                                class="chart-fill medium-fill"
+                                style="width:0%"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="risk-row">
+
+                        <div class="risk-row-header">
+
+                            <span>
+                                Low Risk
+                            </span>
+
+                            <strong id="lowPercentage">
+                                0%
+                            </strong>
+
+                        </div>
+
+
+                        <div class="chart-bar">
+
+                            <div
+                                id="lowBar"
+                                class="chart-fill low-fill"
+                                style="width:0%"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+            <!-- LATEST -->
+
+            <div class="card latest-card">
+
+
+                <div class="card-header">
+
+                    <div>
+
+                        <span class="section-label">
+                            MOST RECENT
+                        </span>
+
+                        <h2>
+                            Latest Prediction
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div id="latestPrediction">
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            ML
+                        </div>
+
+                        <p>
+                            No predictions yet.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ==================================================
+             HISTORY
+        ================================================== -->
+
+        <section class="card history-card">
+
+
+            <div class="card-header">
+
+                <div>
+
+                    <span class="section-label">
+                        DATABASE
+                    </span>
+
+                    <h2>
+                        All Prediction Records
+                    </h2>
+
+                    <p
+                        style="
+                        color:#64748b;
+                        margin-top:5px;
+                        font-size:13px;
+                        "
+                    >
+                        Every prediction is permanently stored
+                        until you delete it.
+                    </p>
+
+                </div>
+
+
+                <span
+                    id="historyCount"
+                    class="history-count"
+                >
+                    0 records
+                </span>
+
+            </div>
+
+
+            <div class="history-table-wrapper">
+
+
+                <table class="history-table">
+
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                ID
+                            </th>
+
+                            <th>
+                                Time
+                            </th>
+
+                            <th>
+                                Prediction
+                            </th>
+
+                            <th>
+                                Probability
+                            </th>
+
+                            <th>
+                                Risk
+                            </th>
+
+                            <th>
+                                Customer
+                            </th>
+
+                            <th>
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody
+                        id="historyTable"
+                    ></tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+            <div
+                id="emptyHistory"
+                class="empty-history"
+                style="display:none;"
+            >
+
+                <div class="empty-icon">
+                    ML
+                </div>
+
+                <h3>
+                    No prediction history
+                </h3>
+
+                <p>
+                    Make a prediction from the prediction
+                    page to see it here.
+                </p>
+
+                <a href="/">
+                    Make Prediction →
+                </a>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+<!-- ======================================================
+     DETAILS MODAL
+====================================================== -->
+
+<div
+    id="detailsModal"
+    class="details-modal"
+>
+
+
+    <div class="details-box">
+
+
+        <div class="details-header">
+
+            <div>
+
+                <span class="section-label">
+                    PREDICTION DETAILS
+                </span>
+
+                <h2>
+                    Customer Record
+                </h2>
+
+            </div>
+
+
+            <button
+                id="closeModal"
+                class="close-modal"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div
+            id="detailsResult"
+            class="details-result"
+        ></div>
+
+
+        <div
+            id="detailsGrid"
+            class="details-grid"
+        ></div>
+
+
+    </div>
+
+</div>
+
+
+<script
+    src="{{ url_for('static', filename='script.js') }}"
+></script>
+
+
+</body>
+
+</html>

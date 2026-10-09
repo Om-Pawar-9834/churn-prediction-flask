@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>ChurnAI - Prediction</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body data-page="prediction">
+
+
+<div class="app-layout">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                C
+            </div>
+
+            <div>
+                <h2>ChurnAI</h2>
+                <span>Prediction System</span>
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a
+                href="/"
+                class="nav-link active"
+            >
+
+                <span>⌂</span>
+
+                Prediction
+
+            </a>
+
+
+            <a
+                href="/dashboard"
+                class="nav-link"
+            >
+
+                <span>▦</span>
+
+                Dashboard
+
+            </a>
+
+
+            <a
+                href="/about"
+                class="nav-link"
+            >
+
+                <span>ⓘ</span>
+
+                About Model
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <div class="model-status">
+
+                <span class="status-dot"></span>
+
+                <div>
+
+                    <strong>Model Online</strong>
+
+                    <small>Ready for prediction</small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main-content">
+
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <span class="page-label">
+                    MACHINE LEARNING
+                </span>
+
+                <h1>Customer Churn Prediction</h1>
+
+                <p>
+                    Enter customer information to estimate
+                    churn risk using the trained ML model.
+                </p>
+
+            </div>
+
+
+            <a
+                href="/dashboard"
+                class="dashboard-button"
+            >
+
+                View Dashboard →
+
+            </a>
+
+        </header>
+
+
+
+        <!-- FORM -->
+
+        <section class="prediction-layout">
+
+
+            <div class="card prediction-card">
+
+
+                <div class="card-header">
+
+                    <div>
+
+                        <span class="section-label">
+                            CUSTOMER DATA
+                        </span>
+
+                        <h2>Customer Information</h2>
+
+                        <p>
+                            Provide the customer's details below.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        id="exampleBtn"
+                        class="secondary-button"
+                    >
+                        Load Example
+                    </button>
+
+                </div>
+
+
+
+                <form id="predictionForm">
+
+
+                    <div class="form-grid">
+
+
+                        <!-- AGE -->
+
+                        <div class="form-group">
+
+                            <label for="age">
+                                Age
+                            </label>
+
+                            <input
+                                type="number"
+                                id="age"
+                                name="Age"
+                                min="1"
+                                max="100"
+                                placeholder="e.g. 32"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- GENDER -->
+
+                        <div class="form-group">
+
+                            <label for="gender">
+                                Gender
+                            </label>
+
+                            <select
+                                id="gender"
+                                name="Gender"
+                                required
+                            >
+
+                                <option value="">
+                                    Select gender
+                                </option>
+
+                                <option value="Male">
+                                    Male
+                                </option>
+
+                                <option value="Female">
+                                    Female
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- TENURE -->
+
+                        <div class="form-group">
+
+                            <label for="tenure">
+                                Tenure
+                                <span>(months)</span>
+                            </label>
+
+                            <input
+                                type="number"
+                                id="tenure"
+                                name="Tenure"
+                                min="0"
+                                placeholder="e.g. 12"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- USAGE -->
+
+                        <div class="form-group">
+
+                            <label for="usageFrequency">
+                                Usage Frequency
+                                <span>(per month)</span>
+                            </label>
+
+                            <input
+                                type="number"
+                                id="usageFrequency"
+                                name="Usage Frequency"
+                                min="0"
+                                placeholder="e.g. 18"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- SUPPORT CALLS -->
+
+                        <div class="form-group">
+
+                            <label for="supportCalls">
+                                Support Calls
+                            </label>
+
+                            <input
+                                type="number"
+                                id="supportCalls"
+                                name="Support Calls"
+                                min="0"
+                                placeholder="e.g. 3"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- PAYMENT DELAY -->
+
+                        <div class="form-group">
+
+                            <label for="paymentDelay">
+                                Payment Delay
+                                <span>(days)</span>
+                            </label>
+
+                            <input
+                                type="number"
+                                id="paymentDelay"
+                                name="Payment Delay"
+                                min="0"
+                                placeholder="e.g. 5"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- SUBSCRIPTION -->
+
+                        <div class="form-group">
+
+                            <label for="subscriptionType">
+                                Subscription Type
+                            </label>
+
+                            <select
+                                id="subscriptionType"
+                                name="Subscription Type"
+                                required
+                            >
+
+                                <option value="">
+                                    Select subscription
+                                </option>
+
+                                <option value="Basic">
+                                    Basic
+                                </option>
+
+                                <option value="Standard">
+                                    Standard
+                                </option>
+
+                                <option value="Premium">
+                                    Premium
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- CONTRACT -->
+
+                        <div class="form-group">
+
+                            <label for="contractLength">
+                                Contract Length
+                            </label>
+
+                            <select
+                                id="contractLength"
+                                name="Contract Length"
+                                required
+                            >
+
+                                <option value="">
+                                    Select contract
+                                </option>
+
+                                <option value="Monthly">
+                                    Monthly
+                                </option>
+
+                                <option value="Quarterly">
+                                    Quarterly
+                                </option>
+
+                                <option value="Annual">
+                                    Annual
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- TOTAL SPEND -->
+
+                        <div class="form-group">
+
+                            <label for="totalSpend">
+                                Total Spend
+                            </label>
+
+                            <input
+                                type="number"
+                                id="totalSpend"
+                                name="Total Spend"
+                                min="0"
+                                step="0.01"
+                                placeholder="e.g. 2500"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- LAST INTERACTION -->
+
+                        <div class="form-group">
+
+                            <label for="lastInteraction">
+                                Last Interaction
+                                <span>(days ago)</span>
+                            </label>
+
+                            <input
+                                type="number"
+                                id="lastInteraction"
+                                name="Last Interaction"
+                                min="0"
+                                placeholder="e.g. 7"
+                                required
+                            >
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="form-actions">
+
+                        <button
+                            type="reset"
+                            class="reset-button"
+                        >
+                            Reset
+                        </button>
+
+
+                        <button
+                            type="submit"
+                            id="predictBtn"
+                            class="predict-button"
+                        >
+
+                            <span id="predictText">
+                                Predict Churn
+                            </span>
+
+                            <span
+                                id="loadingSpinner"
+                                class="spinner hidden"
+                            ></span>
+
+                        </button>
+
+                    </div>
+
+
+                </form>
+
+            </div>
+
+
+
+            <!-- RESULT -->
+
+            <div
+                class="card result-card"
+                id="resultCard"
+            >
+
+
+                <div class="result-placeholder" id="resultPlaceholder">
+
+                    <div class="placeholder-icon">
+                        ML
+                    </div>
+
+                    <h3>Prediction Result</h3>
+
+                    <p>
+                        Complete the customer information
+                        and click "Predict Churn".
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="result-content hidden"
+                    id="resultContent"
+                >
+
+                    <div class="result-header">
+
+                        <span class="section-label">
+                            PREDICTION RESULT
+                        </span>
+
+                        <span
+                            id="riskBadge"
+                            class="risk-badge"
+                        >
+                            Low
+                        </span>
+
+                    </div>
+
+
+                    <div class="prediction-main">
+
+                        <div class="prediction-label">
+                            Churn Status
+                        </div>
+
+                        <h2 id="predictionText">
+                            -
+                        </h2>
+
+                        <p id="predictionMessage">
+                            -
+                        </p>
+
+                    </div>
+
+
+                    <div class="probability-section">
+
+                        <div class="probability-header">
+
+                            <span>
+                                Churn Probability
+                            </span>
+
+                            <strong id="probabilityText">
+                                0%
+                            </strong>
+
+                        </div>
+
+
+                        <div class="progress-bar">
+
+                            <div
+                                id="probabilityBar"
+                                class="progress-fill"
+                                style="width: 0%"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="result-details">
+
+                        <div>
+
+                            <span>Risk Level</span>
+
+                            <strong id="riskText">
+                                -
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>Prediction Time</span>
+
+                            <strong id="timeText">
+                                -
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <a
+                        href="/dashboard"
+                        class="dashboard-result-button"
+                    >
+                        View Updated Dashboard →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+<script
+    src="{{ url_for('static', filename='script.js') }}"
+></script>
+
+</body>
+
+</html>

@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>ChurnAI - About Model</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+
+    <!-- =====================================================
+         ABOUT PAGE EXTRA STYLES
+    ====================================================== -->
+
+    <style>
+
+        /* ==================================================
+           ABOUT HERO
+        ================================================== */
+
+        .about-hero {
+
+            background: #ffffff;
+
+            border: 1px solid #e4e7ef;
+
+            border-radius: 18px;
+
+            padding: 30px;
+
+            margin-bottom: 22px;
+
+            box-shadow:
+                0 8px 24px rgba(
+                    15,
+                    23,
+                    42,
+                    0.04
+                );
+
+        }
+
+
+        .about-hero-content {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 24px;
+
+        }
+
+
+        .about-model-icon {
+
+            width: 72px;
+
+            height: 72px;
+
+            min-width: 72px;
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #4f46e5,
+                    #6366f1
+                );
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 28px;
+
+            font-weight: 800;
+
+            box-shadow:
+                0 10px 25px rgba(
+                    79,
+                    70,
+                    229,
+                    0.25
+                );
+
+        }
+
+
+        .about-hero h2 {
+
+            margin: 4px 0 8px;
+
+            font-size: 25px;
+
+            color: #111827;
+
+        }
+
+
+        .about-hero p {
+
+            margin: 0;
+
+            color: #64748b;
+
+            line-height: 1.7;
+
+            max-width: 800px;
+
+        }
+
+
+
+        /* ==================================================
+           MODEL INFORMATION CARDS
+        ================================================== */
+
+        .about-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    3,
+                    minmax(
+                        0,
+                        1fr
+                    )
+                );
+
+            gap: 20px;
+
+            margin-bottom: 22px;
+
+        }
+
+
+        .about-card {
+
+            background: #ffffff;
+
+            border: 1px solid #e4e7ef;
+
+            border-radius: 18px;
+
+            padding: 24px;
+
+            box-shadow:
+                0 8px 24px rgba(
+                    15,
+                    23,
+                    42,
+                    0.04
+                );
+
+        }
+
+
+        .about-card-icon {
+
+            width: 44px;
+
+            height: 44px;
+
+            border-radius: 12px;
+
+            background: #eef2ff;
+
+            color: #4f46e5;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 20px;
+
+            font-weight: 700;
+
+            margin-bottom: 16px;
+
+        }
+
+
+        .about-card h3 {
+
+            margin: 0 0 8px;
+
+            font-size: 18px;
+
+            color: #111827;
+
+        }
+
+
+        .about-card p {
+
+            margin: 0;
+
+            color: #64748b;
+
+            line-height: 1.65;
+
+            font-size: 14px;
+
+        }
+
+
+
+        /* ==================================================
+           HOW IT WORKS
+        ================================================== */
+
+        .workflow-card {
+
+            background: #ffffff;
+
+            border: 1px solid #e4e7ef;
+
+            border-radius: 18px;
+
+            padding: 28px;
+
+            margin-bottom: 22px;
+
+            box-shadow:
+                0 8px 24px rgba(
+                    15,
+                    23,
+                    42,
+                    0.04
+                );
+
+        }
+
+
+        .workflow-header {
+
+            margin-bottom: 26px;
+
+        }
+
+
+        .workflow-header h2 {
+
+            margin: 4px 0 8px;
+
+            font-size: 23px;
+
+            color: #111827;
+
+        }
+
+
+        .workflow-header p {
+
+            margin: 0;
+
+            color: #64748b;
+
+        }
+
+
+        .workflow {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    4,
+                    minmax(
+                        0,
+                        1fr
+                    )
+                );
+
+            gap: 18px;
+
+        }
+
+
+        .workflow-step {
+
+            position: relative;
+
+            padding: 20px;
+
+            border-radius: 14px;
+
+            background: #f8fafc;
+
+            border: 1px solid #e8ebf2;
+
+        }
+
+
+        .step-number {
+
+            width: 34px;
+
+            height: 34px;
+
+            border-radius: 10px;
+
+            background: #4f46e5;
+
+            color: #ffffff;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-weight: 700;
+
+            font-size: 14px;
+
+            margin-bottom: 14px;
+
+        }
+
+
+        .workflow-step h3 {
+
+            margin: 0 0 8px;
+
+            color: #111827;
+
+            font-size: 16px;
+
+        }
+
+
+        .workflow-step p {
+
+            margin: 0;
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+
+        }
+
+
+
+        /* ==================================================
+           FEATURES
+        ================================================== */
+
+        .features-card {
+
+            background: #ffffff;
+
+            border: 1px solid #e4e7ef;
+
+            border-radius: 18px;
+
+            padding: 28px;
+
+            margin-bottom: 22px;
+
+            box-shadow:
+                0 8px 24px rgba(
+                    15,
+                    23,
+                    42,
+                    0.04
+                );
+
+        }
+
+
+        .features-card h2 {
+
+            margin: 4px 0 8px;
+
+            font-size: 23px;
+
+            color: #111827;
+
+        }
+
+
+        .features-card > p {
+
+            color: #64748b;
+
+            margin-top: 0;
+
+            margin-bottom: 22px;
+
+        }
+
+
+        .feature-list {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    minmax(
+                        0,
+                        1fr
+                    )
+                );
+
+            gap: 12px;
+
+        }
+
+
+        .feature-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 13px 15px;
+
+            border-radius: 11px;
+
+            background: #f8fafc;
+
+            border: 1px solid #edf0f5;
+
+            color: #334155;
+
+            font-size: 14px;
+
+        }
+
+
+        .feature-check {
+
+            width: 28px;
+
+            height: 28px;
+
+            min-width: 28px;
+
+            border-radius: 8px;
+
+            background: #dcfce7;
+
+            color: #16a34a;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-weight: 700;
+
+        }
+
+
+
+        /* ==================================================
+           MODEL STATUS
+        ================================================== */
+
+        .model-info-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                2fr 1fr;
+
+            gap: 20px;
+
+        }
+
+
+        .technology-card {
+
+            background: #111827;
+
+            color: white;
+
+            border-radius: 18px;
+
+            padding: 28px;
+
+        }
+
+
+        .technology-card .section-label {
+
+            color: #a5b4fc;
+
+        }
+
+
+        .technology-card h2 {
+
+            margin: 6px 0 10px;
+
+            font-size: 24px;
+
+        }
+
+
+        .technology-card p {
+
+            color: #cbd5e1;
+
+            line-height: 1.7;
+
+            margin: 0;
+
+        }
+
+
+        .tech-tags {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+            margin-top: 20px;
+
+        }
+
+
+        .tech-tag {
+
+            padding: 7px 11px;
+
+            border-radius: 20px;
+
+            background: rgba(
+                255,
+                255,
+                255,
+                0.08
+            );
+
+            border: 1px solid rgba(
+                255,
+                255,
+                255,
+                0.12
+            );
+
+            color: #e2e8f0;
+
+            font-size: 12px;
+
+        }
+
+
+        .status-card {
+
+            background: #ffffff;
+
+            border: 1px solid #e4e7ef;
+
+            border-radius: 18px;
+
+            padding: 28px;
+
+            box-shadow:
+                0 8px 24px rgba(
+                    15,
+                    23,
+                    42,
+                    0.04
+                );
+
+        }
+
+
+        .online-indicator {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 16px;
+
+        }
+
+
+        .online-dot {
+
+            width: 11px;
+
+            height: 11px;
+
+            border-radius: 50%;
+
+            background: #22c55e;
+
+            box-shadow:
+                0 0 0 5px #dcfce7;
+
+        }
+
+
+        .status-card h3 {
+
+            margin: 0 0 7px;
+
+            color: #111827;
+
+        }
+
+
+        .status-card p {
+
+            margin: 0;
+
+            color: #64748b;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+
+        }
+
+
+
+        /* ==================================================
+           RESPONSIVE
+        ================================================== */
+
+        @media (max-width: 1000px) {
+
+            .about-grid {
+
+                grid-template-columns:
+                    repeat(
+                        2,
+                        minmax(
+                            0,
+                            1fr
+                        )
+                    );
+
+            }
+
+
+            .workflow {
+
+                grid-template-columns:
+                    repeat(
+                        2,
+                        minmax(
+                            0,
+                            1fr
+                        )
+                    );
+
+            }
+
+
+            .model-info-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .about-hero-content {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+            }
+
+
+            .about-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .workflow {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .feature-list {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+
+<body data-page="about">
+
+
+<div class="app-layout">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                C
+            </div>
+
+
+            <div>
+
+                <h2>
+                    ChurnAI
+                </h2>
+
+                <span>
+                    Prediction System
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="sidebar-nav">
+
+
+            <a
+                href="/"
+                class="nav-link"
+            >
+
+                <span>⌂</span>
+
+                Prediction
+
+            </a>
+
+
+            <a
+                href="/dashboard"
+                class="nav-link"
+            >
+
+                <span>▦</span>
+
+                Dashboard
+
+            </a>
+
+
+            <a
+                href="/about"
+                class="nav-link active"
+            >
+
+                <span>ⓘ</span>
+
+                About Model
+
+            </a>
+
+
+        </nav>
+
+
+
+        <!-- SIDEBAR FOOTER -->
+
+        <div class="sidebar-footer">
+
+            <div class="model-status">
+
+                <span class="status-dot"></span>
+
+                <div>
+
+                    <strong>
+                        Model Online
+                    </strong>
+
+                    <small>
+                        Ready for prediction
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             TOP HEADER
+        ================================================== -->
+
+        <header class="topbar">
+
+
+            <div>
+
+                <span class="page-label">
+                    MACHINE LEARNING
+                </span>
+
+
+                <h1>
+                    About ChurnAI
+                </h1>
+
+
+                <p>
+                    Understand how the customer churn
+                    prediction system works.
+                </p>
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- =================================================
+             HERO
+        ================================================== -->
+
+        <section class="about-hero">
+
+
+            <div class="about-hero-content">
+
+
+                <div class="about-model-icon">
+                    ML
+                </div>
+
+
+                <div>
+
+                    <span class="section-label">
+                        MACHINE LEARNING MODEL
+                    </span>
+
+
+                    <h2>
+                        Random Forest Classifier
+                    </h2>
+
+
+                    <p>
+                        ChurnAI uses a Random Forest
+                        classification model to estimate
+                        whether a customer is likely to
+                        leave the service.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             MODEL INFORMATION
+        ================================================== -->
+
+        <section class="about-grid">
+
+
+            <!-- CARD 1 -->
+
+            <div class="about-card">
+
+
+                <div class="about-card-icon">
+                    RF
+                </div>
+
+
+                <h3>
+                    Random Forest
+                </h3>
+
+
+                <p>
+                    Multiple decision trees analyze
+                    customer information and combine
+                    their results to make a final
+                    classification.
+                </p>
+
+
+            </div>
+
+
+
+            <!-- CARD 2 -->
+
+            <div class="about-card">
+
+
+                <div class="about-card-icon">
+                    ⚙
+                </div>
+
+
+                <h3>
+                    Preprocessing
+                </h3>
+
+
+                <p>
+                    Numerical and categorical customer
+                    features are transformed using the
+                    preprocessing pipeline used during
+                    model training.
+                </p>
+
+
+            </div>
+
+
+
+            <!-- CARD 3 -->
+
+            <div class="about-card">
+
+
+                <div class="about-card-icon">
+                    %
+                </div>
+
+
+                <h3>
+                    Churn Probability
+                </h3>
+
+
+                <p>
+                    The trained model produces a churn
+                    prediction together with an estimated
+                    probability of churn.
+                </p>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             HOW IT WORKS
+        ================================================== -->
+
+        <section class="workflow-card">
+
+
+            <div class="workflow-header">
+
+
+                <span class="section-label">
+                    PREDICTION PROCESS
+                </span>
+
+
+                <h2>
+                    How It Works
+                </h2>
+
+
+                <p>
+                    The prediction process follows a
+                    standard machine learning workflow.
+                </p>
+
+
+            </div>
+
+
+
+            <div class="workflow">
+
+
+                <!-- STEP 1 -->
+
+                <div class="workflow-step">
+
+
+                    <div class="step-number">
+                        01
+                    </div>
+
+
+                    <h3>
+                        Customer Data
+                    </h3>
+
+
+                    <p>
+                        Customer information such as age,
+                        tenure, usage frequency, support
+                        calls and payment behavior is
+                        collected.
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- STEP 2 -->
+
+                <div class="workflow-step">
+
+
+                    <div class="step-number">
+                        02
+                    </div>
+
+
+                    <h3>
+                        Preprocessing
+                    </h3>
+
+
+                    <p>
+                        Numerical and categorical features
+                        are processed using the same
+                        preprocessing pipeline used during
+                        training.
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- STEP 3 -->
+
+                <div class="workflow-step">
+
+
+                    <div class="step-number">
+                        03
+                    </div>
+
+
+                    <h3>
+                        Random Forest
+                    </h3>
+
+
+                    <p>
+                        Multiple decision trees analyze
+                        the customer features and combine
+                        their predictions.
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- STEP 4 -->
+
+                <div class="workflow-step">
+
+
+                    <div class="step-number">
+                        04
+                    </div>
+
+
+                    <h3>
+                        Classification
+                    </h3>
+
+
+                    <p>
+                        The model predicts whether the
+                        customer belongs to the churn or
+                        non-churn class.
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             INPUT FEATURES
+        ================================================== -->
+
+        <section class="features-card">
+
+
+            <span class="section-label">
+                CUSTOMER FEATURES
+            </span>
+
+
+            <h2>
+                Information Used by the Model
+            </h2>
+
+
+            <p>
+                The prediction model uses the following
+                customer attributes to estimate churn risk.
+            </p>
+
+
+
+            <div class="feature-list">
+
+
+                <div class="feature-item">
+
+                    <span class="feature-check">
+                        ✓
+                    </span>
+
+                    Age
+
+                </div>
+
+
+                <div class="feature-item">
+
+                    <span class="feature-check">
+                        ✓
+                    </span>
+
+                    Gender
+
+                </div>
+
+
+                <div class="feature-item">
+
+                    <span class="feature-check">
+                        ✓
+                    </span>
+
+                    Tenure
+
+                </div>
+
+
+                <div class="feature-item">
+
+                    <span class="feature-check">
+                        ✓
+                    </span>
+
+                    Usage Frequency
+
+                </div>
+
+
+                <div class="feature-item">
+
+                    <span class="feature-check">
+                        ✓
+                    </span>
+
+                    Support Calls
+
+                </div>
+
+
+                <div class="feature-item">
+
+                    <span class="feature-check">
+                        ✓
+                    </span>
+
+                    Payment Delay
+
+                </div>
+
+
+                <div class="feature-item">
+
+                    <span class="feature-check">
+                        ✓
+                    </span>
+
+                    Subscription Type
+
+                </div>
+
+
+                <div class="feature-item">
+
+                    <span class="feature-check">
+                        ✓
+                    </span>
+
+                    Contract Length
+
+                </div>
+
+
+                <div class="feature-item">
+
+                    <span class="feature-check">
+                        ✓
+                    </span>
+
+                    Total Spend
+
+                </div>
+
+
+                <div class="feature-item">
+
+                    <span class="feature-check">
+                        ✓
+                    </span>
+
+                    Last Interaction
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             TECHNOLOGY + STATUS
+        ================================================== -->
+
+        <section class="model-info-grid">
+
+
+            <!-- TECHNOLOGY -->
+
+            <div class="technology-card">
+
+
+                <span class="section-label">
+                    TECHNOLOGY STACK
+                </span>
+
+
+                <h2>
+                    Built for Customer Churn Analysis
+                </h2>
+
+
+                <p>
+                    ChurnAI combines a trained machine
+                    learning pipeline with a Flask web
+                    application to provide real-time
+                    customer churn predictions.
+                </p>
+
+
+
+                <div class="tech-tags">
+
+                    <span class="tech-tag">
+                        Python
+                    </span>
+
+                    <span class="tech-tag">
+                        Scikit-learn
+                    </span>
+
+                    <span class="tech-tag">
+                        Random Forest
+                    </span>
+
+                    <span class="tech-tag">
+                        Pandas
+                    </span>
+
+                    <span class="tech-tag">
+                        Flask
+                    </span>
+
+                    <span class="tech-tag">
+                        HTML
+                    </span>
+
+                    <span class="tech-tag">
+                        CSS
+                    </span>
+
+                    <span class="tech-tag">
+                        JavaScript
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- STATUS -->
+
+            <div class="status-card">
+
+
+                <div class="online-indicator">
+
+                    <span class="online-dot"></span>
+
+                    <strong>
+                        System Online
+                    </strong>
+
+                </div>
+
+
+                <h3>
+                    Model Ready
+                </h3>
+
+
+                <p>
+                    The trained model is loaded and ready
+                    to process customer information through
+                    the prediction interface.
+                </p>
+
+
+            </div>
+
+
+        </section>
+
+
+
+    </main>
+
+
+</div>
+
+
+</body>
+
+</html>

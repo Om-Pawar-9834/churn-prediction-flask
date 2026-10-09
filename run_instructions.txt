@@ -1,0 +1,27 @@
+CHURN PREDICTION - FLASK SETUP
+
+1. Put your trained model at:
+   model/model.pkl
+
+2. IMPORTANT:
+   The saved model should preferably be a complete sklearn Pipeline containing
+   your ColumnTransformer/preprocessing and final model.
+
+3. Install:
+   pip install -r requirements.txt
+
+4. Run:
+   python app.py
+
+5. Open:
+   http://127.0.0.1:5000
+
+6. The frontend sends POST /predict.
+   The backend loads model.pkl and returns:
+   - prediction
+   - churn_probability
+
+IMPORTANT:
+The feature names and values in app.py MUST match the exact features used
+during model training. If your dataset uses different column names, edit the
+X_new section accordingly.
